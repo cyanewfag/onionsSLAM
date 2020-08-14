@@ -174,15 +174,16 @@ local function drawGUI()
         textSize = renderer.get_text_size(text, fonts[2])
 
         if (textSize.x + 10 < 150) then
-            textSize = vector2d.new(150, textSize.y);
+            renderer.filled_rect(scrSize.x / 2 - 75, 20, 150, 40, colors[1])
+            renderer.rect(scrSize.x / 2 - 75, 20, 150, 40, colors[3])
+            renderer.filled_rect(scrSize.x / 2 - 77, 22, 1, 36, colors[7])
         else
-            textSize = vector2d.new(textSize.x + 10, textSize.y);
+            renderer.filled_rect(scrSize.x / 2 - (textSize.x / 2) - 10, 20, textSize.x + 20, 40, colors[1])
+            renderer.rect(scrSize.x / 2 - (textSize.x / 2) - 10, 20, textSize.x + 20, 40, colors[3])
+            renderer.filled_rect(scrSize.x / 2 - (textSize.x / 2) - 2 - 10, 22, 1, 36, colors[7])
         end
 
-        renderer.filled_rect(scrSize.x / 2 - (textSize.x / 2), 20, textSize.x, 40, colors[1])
-        renderer.rect(scrSize.x / 2 - (textSize.x / 2), 20, textSize.x, 40, colors[3])
-        renderer.filled_rect(scrSize.x / 2 - (textSize.x / 2) - 2, 22, 1, 36, colors[7])
-        renderer.text(scrSize.x / 2 - (textSize.x / 2) + 4, 40 - (textSize.y / 2), text, colors[4], fonts[2]);
+        renderer.text(scrSize.x / 2 - (textSize.x / 2), 40 - (textSize.y / 2), text, colors[4], fonts[2]);
     end
 end
 
