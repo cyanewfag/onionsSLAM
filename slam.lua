@@ -1,6 +1,7 @@
 -- Music Path in get_files("MUSIC PATH HERE")
-local songTable = filesystem.get_files("C:\\Users\\Username\\Documents\\wavmusic", ".wav");
+local songPath = "C:\\Users\\Username\\Documents\\wavmusic";
 
+local songTable = filesystem.get_files(songPath, ".wav");
 local guiEnabled = false;
 local cachedTime = globalvars.realtime;
 local mousePos;
@@ -153,6 +154,10 @@ local function drawGUI()
             songStepper(true);
         end
 
+        if (drawButton(guiPos.x + guiSize.x - 75, guiPos.y + 130, fonts[2], "Refresh")) then
+            songTable = filesystem.get_files(songPath, ".wav");
+        end
+
         if (keys.key_pressed(0x26)) then
             songStepper(false);
         elseif (keys.key_pressed(0x28)) then
@@ -160,10 +165,10 @@ local function drawGUI()
         end
 
         textSize = renderer.get_text_size("Skipped: " .. skippedSongs, fonts[2])
-        renderer.text((guiPos.x + guiSize.x - 75) - (textSize.x / 2), guiPos.y + 130 - (textSize.y / 2), "Skipped: " .. skippedSongs, colors[4], fonts[2]);
+        renderer.text((guiPos.x + guiSize.x - 75) - (textSize.x / 2), guiPos.y + 160 - (textSize.y / 2), "Skipped: " .. skippedSongs, colors[4], fonts[2]);
         skipY = textSize.y;
         textSize = renderer.get_text_size("Songs: " .. #songTable, fonts[2])
-        renderer.text((guiPos.x + guiSize.x - 75) - (textSize.x / 2), guiPos.y + 130 - (textSize.y / 2) + skipY, "Songs: " .. #songTable, colors[4], fonts[2]);
+        renderer.text((guiPos.x + guiSize.x - 75) - (textSize.x / 2), guiPos.y + 160 - (textSize.y / 2) + skipY, "Songs: " .. #songTable, colors[4], fonts[2]);
     elseif (song ~= nil) then
         text = "Song: " .. song;
         textSize = renderer.get_text_size(text, fonts[2])
