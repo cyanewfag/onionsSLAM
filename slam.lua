@@ -104,20 +104,20 @@ local function drawSong(name, usedY)
         local songName = splitPath(name, 2);
 
         if (mousePos.x >= guiPos.x and mousePos.x <= guiPos.x + guiSize.x - 150 and mousePos.y >= guiPos.y + usedY and mousePos.y <= guiPos.y + usedY + 30) then
-            renderer.filled_rect(guiPos.x, guiPos.y + usedY, guiSize.x - 150, 30, colors[2]);
+            if (mouseDown == false) then
+                renderer.filled_rect(guiPos.x, guiPos.y + usedY, guiSize.x - 150, 30, colors[2]);
+            elseif (mouseDownPos.x >= guiPos.x and mouseDownPos.x <= guiPos.x + guiSize.x - 150 and mouseDownPos.y >= guiPos.y + usedY and mouseDownPos.y <= guiPos.y + usedY + 30) then
+                renderer.filled_rect(guiPos.x, guiPos.y + usedY, guiSize.x - 150, 30, colors[6]);
+                audio.play_voice(name);
+                audio.play_sound(name);
+
+                song = songName;
+            end
         end
 
         renderer.rect(guiPos.x, guiPos.y + usedY, guiSize.x - 150, 30, colors[3]);
         size = renderer.get_text_size(songName, fonts[2]);
         renderer.text(guiPos.x + 10, (guiPos.y + usedY + 15) - (size.y / 2), songName, colors[4], fonts[2]);
-
-        if (drawButton(guiPos.x + guiSize.x - 170, guiPos.y + usedY + 15, fonts[2], "Play")) then
-            audio.play_voice(name);
-            audio.play_sound(name);
-
-            song = songName;
-        end
-
         return 30;
     else
         return 0;
