@@ -17,6 +17,18 @@ local song;
 local skippedSongs = 0;
 local maxVisible = 0;
 
+local function songStepper(increase)
+    if (increase) then
+        if (skippedSongs + 1 <= #songTable - maxVisible) then
+            skippedSongs = skippedSongs + 1;
+        end
+    else
+        if (skippedSongs ~= 0) then
+            skippedSongs = skippedSongs - 1;
+        end
+    end
+end
+
 local function splitPath(str, index)
     if (str ~= nil) then
         local path, file, extension = string.match(str, "(.-)([^\\]-([^\\%.]+))$")
@@ -134,15 +146,17 @@ local function drawGUI()
         end
 
         if (drawButton(guiPos.x + guiSize.x - 75, guiPos.y + 70, fonts[2], "Scroll Up")) then
-            if (skippedSongs ~= 0) then
-                skippedSongs = skippedSongs - 1;
-            end
+            songStepper(false);
         end
 
         if (drawButton(guiPos.x + guiSize.x - 75, guiPos.y + 100, fonts[2], "Scroll Down")) then
-            if (skippedSongs + 1 <= #songTable - maxVisible) then
-                skippedSongs = skippedSongs + 1;
-            end
+            songStepper(true);
+        end
+
+        if (keys.key_pressed(0x26)) then
+            songStepper(false);
+        elseif (keys.key_pressed(0x28)) then
+            songStepper(true);
         end
 
         textSize = renderer.get_text_size("Skipped: " .. skippedSongs, fonts[2])
